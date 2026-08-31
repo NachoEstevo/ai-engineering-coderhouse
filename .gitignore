@@ -2,3 +2,4 @@
 **/.venv/
 **/__pycache__/
 tmp/
+09_preentrega_rag/vectorstore/
