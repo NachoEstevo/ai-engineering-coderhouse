@@ -3,10 +3,9 @@ import logging
 from time import perf_counter
 
 from pinecone import Pinecone, ServerlessSpec
-from pinecone.exceptions import PineconeApiException
 
 from config import Settings
-from retry import run_with_retry
+from retry import PINECONE_RETRYABLE, run_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -18,15 +17,14 @@ async def ensure_index(
     timeout: float = 60.0,
 ) -> Pinecone:
     started_at = perf_counter()
-    pinecone = client or Pinecone(
-        api_key=settings.pinecone_api_key.get_secret_value()
-    )
+    pinecone = client or Pinecone(api_key=settings.pinecone_api_key.get_secret_value())
 
     async def list_names():
         return await asyncio.to_thread(lambda: pinecone.list_indexes().names())
 
-    names = await run_with_retry(list_names, (PineconeApiException,))
+    names = await run_with_retry(list_names, PINECONE_RETRYABLE)
     if settings.index_name not in names:
+
         async def create():
             return await asyncio.to_thread(
                 pinecone.create_index,
@@ -36,17 +34,18 @@ async def ensure_index(
                 spec=ServerlessSpec(cloud="aws", region="us-east-1"),
             )
 
-        await run_with_retry(create, (PineconeApiException,))
+        await run_with_retry(create, PINECONE_RETRYABLE)
 
     deadline = perf_counter() + timeout
     while True:
+
         async def describe():
             return await asyncio.to_thread(
                 pinecone.describe_index,
                 name=settings.index_name,
             )
 
-        description = await run_with_retry(describe, (PineconeApiException,))
+        description = await run_with_retry(describe, PINECONE_RETRYABLE)
         if description.dimension != settings.embedding_dimension:
             raise ValueError(
                 f"El índice tiene dimensión {description.dimension}, "
@@ -55,7 +54,9 @@ async def ensure_index(
         if description.status["ready"]:
             break
         if perf_counter() >= deadline:
-            raise TimeoutError("Pinecone no habilitó el índice dentro del tiempo esperado")
+            raise TimeoutError(
+                "Pinecone no habilitó el índice dentro del tiempo esperado"
+            )
         await asyncio.sleep(poll_interval)
 
     logger.info("Índice preparado en %.3f segundos", perf_counter() - started_at)

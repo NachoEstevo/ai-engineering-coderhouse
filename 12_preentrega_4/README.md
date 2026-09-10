@@ -5,10 +5,10 @@ Sistema de recuperación híbrida sobre documentación de Python `asyncio`. Comb
 ## Componentes
 
 - `pinecone_setup.py`: crea el índice Serverless en AWS `us-east-1` si no existe y valida que tenga 1536 dimensiones.
-- `documents.py`: carga Markdown, continúa ante archivos ilegibles y divide el contenido en chunks de 600 tokens con 80 de overlap.
+- `documents.py`: carga Markdown y divide el contenido en chunks de 600 tokens con 80 de overlap. La ingesta utiliza lectura estricta para no eliminar datos si falta un archivo por un error de lectura.
 - `ingest.py`: genera embeddings con `text-embedding-3-small` e inserta los chunks en el namespace `asyncio-docs`.
 - `retriever.py`: combina `BM25Retriever` y Pinecone mediante `EnsembleRetriever`, con pesos 0.4 y 0.6.
-- `evaluate.py`: ejecuta cinco preguntas del Golden Set y calcula Precision@5 y Recall@5.
+- `evaluate.py`: ejecuta cinco preguntas del Golden Set y calcula Precision@5, Recall@5 y MRR@5.
 - `tests/`: verifica localmente configuración, chunking, errores de archivos, reintentos, batching, recuperación y métricas.
 
 ## Cuentas y variables necesarias
@@ -45,26 +45,33 @@ python ingest.py
 
 El script crea o reutiliza el índice, valida la dimensión, procesa los archivos de `data/`, genera embeddings y realiza el upsert por lotes. Cada vector conserva `text`, `source`, `page`, `category`, `tags` y `chunk_id` en sus metadatos.
 
+El namespace es exclusivo de este dataset. Cada ID usa fuente, posición dentro del documento y contenido; agregar otro documento no cambia los IDs existentes. Después de confirmar todos los lotes, el script elimina por ID los vectores anteriores que ya no están en el corpus. Esto cubre documentos modificados, renombrados y retirados. No usa `delete_all` ni toca otros namespaces. Los documentos locales permiten reconstruir los vectores.
+
+Ejecutá una sola ingesta a la vez sobre este namespace. Si un archivo no puede leerse, está vacío o falla un upsert, el proceso se detiene antes de borrar vectores anteriores. Un directorio sin documentos tampoco permite la limpieza.
+
+Los reintentos externos son como máximo tres, con esperas de 1 y 2 segundos. Para Pinecone se reintentan problemas de transporte, HTTP 408, 429 y 5xx; los 400, 401 y 403 fallan inmediatamente. Los embeddings desactivan los reintentos internos del SDK para no multiplicar los intentos de la aplicación.
+
 ## Evaluación
 
 ```powershell
 python evaluate.py
 ```
 
-Para cada pregunta se imprimen las fuentes recuperadas, Precision@5 y Recall@5. Al final se muestra el promedio de las cinco consultas.
+Para cada pregunta se imprimen las fuentes recuperadas, Precision@5, Recall@5 y el rango recíproco. Al final se muestran los promedios. El Top 5 y las métricas se calculan por fuentes únicas, conservando el chunk mejor ubicado de cada fuente.
 
-Con una única fuente relevante por pregunta, Recall@5 vale 1 cuando esa fuente aparece entre los cinco resultados. Precision@5 vale 0.2 cuando uno de los cinco resultados pertenece a la fuente esperada.
+El Golden Set incluye dos fuentes relevantes justificadas por pregunta, porque cada consulta combina dos necesidades relacionadas. Precision@5 es la cantidad de fuentes relevantes recuperadas dividida por 5; Recall@5 divide por las dos fuentes esperadas. MRR@5 promedia el inverso de la posición de la primera fuente relevante (1 en primera posición, 0.5 en segunda, 0 si no aparece).
 
 ## Resultado de la evaluación
 
 Evaluación ejecutada el 10 de septiembre de 2026 sobre el índice `asyncio-rag-serverless` y el namespace `asyncio-docs`:
 
 ```text
-Precision@5 promedio: 0.20
+Precision@5 promedio: 0.40
 Recall@5 promedio: 1.00
+MRR@5 promedio: 0.90
 ```
 
-La fuente esperada apareció en la primera posición para las cinco preguntas. Como cada caso define una única fuente relevante, una recuperación perfecta dentro del top 5 produce Precision@5 de 0.20 y Recall@5 de 1.00.
+Las dos fuentes relevantes aparecieron en el Top 5 de cada pregunta. La primera fuente relevante quedó primera en cuatro preguntas y segunda en una. Con estas etiquetas, el máximo de Precision@5 es 0.40; MRR permite distinguir el orden de los resultados aunque ese valor se mantenga. Son cinco consultas sobre siete documentos: una comprobación didáctica, no evidencia de calidad para un corpus amplio. Estos valores corresponden al Golden Set revisado y no son comparables directamente con los del benchmark anterior.
 
 ## Pruebas locales
 
@@ -73,6 +80,12 @@ python -m pytest -q
 ```
 
 Las pruebas no consumen OpenAI ni Pinecone. La ejecución real de `ingest.py` y `evaluate.py` sí requiere ambas API keys.
+
+Las regresiones cubren IDs estables al agregar documentos, limpieza limitada al namespace, ausencia de borrados cuando falla la carga, lectura estricta, fuentes duplicadas y clasificación de errores reintentables.
+
+## Mantenimiento de dependencias
+
+`langchain-community` emite una advertencia de retirada. Se mantiene para el `BM25Retriever` solicitado por la consigna; la advertencia ya no se oculta en pytest. Revisar su migración a una integración independiente antes de adoptar nuevas versiones mayores de LangChain.
 
 ## Fuentes del dataset
 

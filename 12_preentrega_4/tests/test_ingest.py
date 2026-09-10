@@ -60,3 +60,62 @@ def test_upsert_batches_uses_namespace_and_batch_size():
     assert count == 5
     assert [len(call["vectors"]) for call in index.calls] == [2, 2, 1]
     assert all(call["namespace"] == "asyncio-docs" for call in index.calls)
+
+
+def test_cleanup_only_deletes_explicit_ids_in_target_namespace():
+    from ingest import delete_obsolete_vectors
+
+    class FakeDeletionIndex:
+        def __init__(self):
+            self.calls = []
+
+        def delete(self, **kwargs):
+            self.calls.append(kwargs)
+
+    index = FakeDeletionIndex()
+    assert (
+        asyncio.run(delete_obsolete_vectors(index, {"old-1", "old-2"}, "course")) == 2
+    )
+    assert index.calls == [{"ids": ["old-1", "old-2"], "namespace": "course"}]
+
+
+def test_failed_upsert_never_deletes_existing_vectors(tmp_path, monkeypatch):
+    import pytest
+    import ingest
+    from config import Settings
+
+    (tmp_path / "a.md").write_text("Nuevo contenido", encoding="utf-8")
+    deleted = []
+
+    class FakeEmbeddingModel:
+        def __init__(self, **kwargs):
+            self.dimension = kwargs["dimensions"]
+
+        async def aembed_documents(self, texts):
+            return [[0.1] * self.dimension for _ in texts]
+
+    class FailingIndex:
+        def list(self, namespace):
+            yield ["old-id"]
+
+        def upsert(self, **kwargs):
+            raise ValueError("Carga fallida")
+
+        def delete(self, **kwargs):
+            deleted.append(kwargs)
+
+    class FakePinecone:
+        def Index(self, name):
+            return FailingIndex()
+
+    async def ensure(settings):
+        return FakePinecone()
+
+    monkeypatch.setattr(ingest, "OpenAIEmbeddings", FakeEmbeddingModel)
+    monkeypatch.setattr(ingest, "ensure_index", ensure)
+    settings = Settings(
+        pinecone_api_key="fake", openai_api_key="fake", index_name="test"
+    )
+    with pytest.raises(ValueError, match="Carga fallida"):
+        asyncio.run(ingest.ingest_documents(settings, tmp_path))
+    assert deleted == []

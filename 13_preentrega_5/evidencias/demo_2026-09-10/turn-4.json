@@ -1,0 +1,45 @@
+{
+  "thread_id": "demo-01660f69cc",
+  "respuesta": "El servicio **pedidos** tiene el incidente **INC-305**: **trabajos pendientes por un consumidor detenido**. El responsable es el **Equipo de operaciones**.\n\nProcedimiento **QUEUE-02**:\n\n1. Revisar el log del consumidor y corregir la causa de la detención.\n2. Reiniciar el consumidor siguiendo el procedimiento operativo.\n3. Verificar que cada trabajo confirme su finalización.\n\n**Verificación:** comprobar que disminuya la cantidad de trabajos pendientes.",
+  "eventos": [
+    {
+      "tipo": "usuario",
+      "texto": "Ahora consultá el incidente del servicio pedidos y los pasos de su procedimiento."
+    },
+    {
+      "tipo": "accion",
+      "herramienta": "buscar_incidente",
+      "argumentos": {
+        "servicio": "pedidos"
+      },
+      "id": "call_DMirnBwS9GMFuLERVk9srqfS"
+    },
+    {
+      "tipo": "observacion",
+      "herramienta": "buscar_incidente",
+      "id": "call_DMirnBwS9GMFuLERVk9srqfS",
+      "estado": "success",
+      "resultado": "{\"estado\": \"ok\", \"incidente_id\": \"INC-305\", \"servicio\": \"pedidos\", \"sintoma\": \"Trabajos pendientes por un consumidor detenido.\", \"procedimiento_id\": \"QUEUE-02\", \"responsable\": \"Equipo de operaciones\"}"
+    },
+    {
+      "tipo": "accion",
+      "herramienta": "consultar_procedimiento",
+      "argumentos": {
+        "procedimiento_id": "QUEUE-02"
+      },
+      "id": "call_H2LZ0r9r6UR4FkpsUJCcaWZu"
+    },
+    {
+      "tipo": "observacion",
+      "herramienta": "consultar_procedimiento",
+      "id": "call_H2LZ0r9r6UR4FkpsUJCcaWZu",
+      "estado": "success",
+      "resultado": "{\"estado\": \"ok\", \"procedimiento_id\": \"QUEUE-02\", \"pasos\": [\"Revisar el log del consumidor y corregir la causa de la detención.\", \"Reiniciar el consumidor siguiendo el procedimiento operativo.\", \"Verificar que cada trabajo confirma su finalización.\"], \"verificacion\": \"Comprobar que la cantidad de trabajos pendientes disminuye.\"}"
+    },
+    {
+      "tipo": "respuesta",
+      "texto": "El servicio **pedidos** tiene el incidente **INC-305**: **trabajos pendientes por un consumidor detenido**. El responsable es el **Equipo de operaciones**.\n\nProcedimiento **QUEUE-02**:\n\n1. Revisar el log del consumidor y corregir la causa de la detención.\n2. Reiniciar el consumidor siguiendo el procedimiento operativo.\n3. Verificar que cada trabajo confirme su finalización.\n\n**Verificación:** comprobar que disminuya la cantidad de trabajos pendientes."
+    }
+  ],
+  "segundos": 5.383
+}

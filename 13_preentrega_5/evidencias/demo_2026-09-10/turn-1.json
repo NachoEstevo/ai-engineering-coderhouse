@@ -1,0 +1,60 @@
+{
+  "thread_id": "demo-01660f69cc",
+  "respuesta": "El servicio **pagos** tiene el incidente **INC-204**: **respuestas 503 por agotamiento del pool de conexiones a PostgreSQL**. El responsable es el **Equipo de plataforma**.\n\nProcedimiento **POOL-01**:\n\n1. Revisar las conexiones activas y las transacciones largas en PostgreSQL.\n2. Corregir las rutas que no liberan conexiones al finalizar.\n3. Limitar la concurrencia de la API a la capacidad del pool.\n\n**Verificación:** comprobar que disminuyan los errores 503 y la espera de conexiones.",
+  "eventos": [
+    {
+      "tipo": "usuario",
+      "texto": "¿Qué incidente tiene el servicio pagos y qué pasos recomienda su procedimiento para resolverlo?"
+    },
+    {
+      "tipo": "accion",
+      "herramienta": "buscar_incidente",
+      "argumentos": {
+        "servicio": "pagos"
+      },
+      "id": "call_rjx2IwWxMq0mA86XUlx97Cwt"
+    },
+    {
+      "tipo": "observacion",
+      "herramienta": "buscar_incidente",
+      "id": "call_rjx2IwWxMq0mA86XUlx97Cwt",
+      "estado": "error",
+      "resultado": "Error: ToolException('Consulta temporalmente no disponible; reintentá una vez.')\n Please fix your mistakes."
+    },
+    {
+      "tipo": "accion",
+      "herramienta": "buscar_incidente",
+      "argumentos": {
+        "servicio": "pagos"
+      },
+      "id": "call_ZMQ9YGytVst164BcELSiMqk7"
+    },
+    {
+      "tipo": "observacion",
+      "herramienta": "buscar_incidente",
+      "id": "call_ZMQ9YGytVst164BcELSiMqk7",
+      "estado": "success",
+      "resultado": "{\"estado\": \"ok\", \"incidente_id\": \"INC-204\", \"servicio\": \"pagos\", \"sintoma\": \"Respuestas 503 al agotarse el pool de conexiones a PostgreSQL.\", \"procedimiento_id\": \"POOL-01\", \"responsable\": \"Equipo de plataforma\"}"
+    },
+    {
+      "tipo": "accion",
+      "herramienta": "consultar_procedimiento",
+      "argumentos": {
+        "procedimiento_id": "POOL-01"
+      },
+      "id": "call_Dps640XAIqfhapT0dwJWa4Sa"
+    },
+    {
+      "tipo": "observacion",
+      "herramienta": "consultar_procedimiento",
+      "id": "call_Dps640XAIqfhapT0dwJWa4Sa",
+      "estado": "success",
+      "resultado": "{\"estado\": \"ok\", \"procedimiento_id\": \"POOL-01\", \"pasos\": [\"Revisar conexiones activas y transacciones largas en PostgreSQL.\", \"Corregir las rutas que no liberan conexiones al finalizar.\", \"Limitar la concurrencia de la API a la capacidad del pool.\"], \"verificacion\": \"Comprobar que bajan los errores 503 y la espera de conexiones.\"}"
+    },
+    {
+      "tipo": "respuesta",
+      "texto": "El servicio **pagos** tiene el incidente **INC-204**: **respuestas 503 por agotamiento del pool de conexiones a PostgreSQL**. El responsable es el **Equipo de plataforma**.\n\nProcedimiento **POOL-01**:\n\n1. Revisar las conexiones activas y las transacciones largas en PostgreSQL.\n2. Corregir las rutas que no liberan conexiones al finalizar.\n3. Limitar la concurrencia de la API a la capacidad del pool.\n\n**Verificación:** comprobar que disminuyan los errores 503 y la espera de conexiones."
+    }
+  ],
+  "segundos": 7.081
+}

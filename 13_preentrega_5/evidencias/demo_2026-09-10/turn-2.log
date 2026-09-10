@@ -1,0 +1,5 @@
+INFO httpx2: HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+INFO agent: Llamada al modelo: 1.850s
+INFO __main__: Turno completado en 1.860s
+
+El responsable del incidente **INC-204** es el **Equipo de plataforma**.

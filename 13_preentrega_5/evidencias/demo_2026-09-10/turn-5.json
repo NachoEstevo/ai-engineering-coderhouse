@@ -1,0 +1,15 @@
+{
+  "thread_id": "demo-01660f69cc-nuevo",
+  "respuesta": "No tengo identificado el incidente al que te referís. ¿Podés indicar el nombre exacto del servicio o el ID del incidente?",
+  "eventos": [
+    {
+      "tipo": "usuario",
+      "texto": "¿Quién era el responsable del incidente que mencioné antes?"
+    },
+    {
+      "tipo": "respuesta",
+      "texto": "No tengo identificado el incidente al que te referís. ¿Podés indicar el nombre exacto del servicio o el ID del incidente?"
+    }
+  ],
+  "segundos": 2.051
+}

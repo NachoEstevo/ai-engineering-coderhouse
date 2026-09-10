@@ -1,0 +1,5 @@
+INFO httpx2: HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+INFO agent: Llamada al modelo: 2.044s
+INFO __main__: Turno completado en 2.051s
+
+No tengo identificado el incidente al que te referís. ¿Podés indicar el nombre exacto del servicio o el ID del incidente?

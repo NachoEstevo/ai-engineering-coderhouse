@@ -1,0 +1,182 @@
+{
+  "origen": "Ejecución real de OpenAI con herramientas y datos ficticios locales",
+  "modelo": "gpt-5.6-luna",
+  "fecha_utc": "2026-09-10T18:50:47.132429+00:00",
+  "descripcion": "Acciones, observaciones y respuestas visibles; no contiene razonamiento interno privado.",
+  "procesos_independientes": 5,
+  "verificaciones": {
+    "multipaso": true,
+    "recuperacion_de_error": true,
+    "memoria_entre_procesos": true,
+    "informacion_incompleta": true,
+    "cambio_de_servicio": true,
+    "aislamiento_de_hilos": true
+  },
+  "turnos": [
+    {
+      "thread_id": "demo-01660f69cc",
+      "respuesta": "El servicio **pagos** tiene el incidente **INC-204**: **respuestas 503 por agotamiento del pool de conexiones a PostgreSQL**. El responsable es el **Equipo de plataforma**.\n\nProcedimiento **POOL-01**:\n\n1. Revisar las conexiones activas y las transacciones largas en PostgreSQL.\n2. Corregir las rutas que no liberan conexiones al finalizar.\n3. Limitar la concurrencia de la API a la capacidad del pool.\n\n**Verificación:** comprobar que disminuyan los errores 503 y la espera de conexiones.",
+      "eventos": [
+        {
+          "tipo": "usuario",
+          "texto": "¿Qué incidente tiene el servicio pagos y qué pasos recomienda su procedimiento para resolverlo?"
+        },
+        {
+          "tipo": "accion",
+          "herramienta": "buscar_incidente",
+          "argumentos": {
+            "servicio": "pagos"
+          },
+          "id": "call_rjx2IwWxMq0mA86XUlx97Cwt"
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "buscar_incidente",
+          "id": "call_rjx2IwWxMq0mA86XUlx97Cwt",
+          "estado": "error",
+          "resultado": "Error: ToolException('Consulta temporalmente no disponible; reintentá una vez.')\n Please fix your mistakes."
+        },
+        {
+          "tipo": "accion",
+          "herramienta": "buscar_incidente",
+          "argumentos": {
+            "servicio": "pagos"
+          },
+          "id": "call_ZMQ9YGytVst164BcELSiMqk7"
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "buscar_incidente",
+          "id": "call_ZMQ9YGytVst164BcELSiMqk7",
+          "estado": "success",
+          "resultado": "{\"estado\": \"ok\", \"incidente_id\": \"INC-204\", \"servicio\": \"pagos\", \"sintoma\": \"Respuestas 503 al agotarse el pool de conexiones a PostgreSQL.\", \"procedimiento_id\": \"POOL-01\", \"responsable\": \"Equipo de plataforma\"}"
+        },
+        {
+          "tipo": "accion",
+          "herramienta": "consultar_procedimiento",
+          "argumentos": {
+            "procedimiento_id": "POOL-01"
+          },
+          "id": "call_Dps640XAIqfhapT0dwJWa4Sa"
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_procedimiento",
+          "id": "call_Dps640XAIqfhapT0dwJWa4Sa",
+          "estado": "success",
+          "resultado": "{\"estado\": \"ok\", \"procedimiento_id\": \"POOL-01\", \"pasos\": [\"Revisar conexiones activas y transacciones largas en PostgreSQL.\", \"Corregir las rutas que no liberan conexiones al finalizar.\", \"Limitar la concurrencia de la API a la capacidad del pool.\"], \"verificacion\": \"Comprobar que bajan los errores 503 y la espera de conexiones.\"}"
+        },
+        {
+          "tipo": "respuesta",
+          "texto": "El servicio **pagos** tiene el incidente **INC-204**: **respuestas 503 por agotamiento del pool de conexiones a PostgreSQL**. El responsable es el **Equipo de plataforma**.\n\nProcedimiento **POOL-01**:\n\n1. Revisar las conexiones activas y las transacciones largas en PostgreSQL.\n2. Corregir las rutas que no liberan conexiones al finalizar.\n3. Limitar la concurrencia de la API a la capacidad del pool.\n\n**Verificación:** comprobar que disminuyan los errores 503 y la espera de conexiones."
+        }
+      ],
+      "segundos": 7.081
+    },
+    {
+      "thread_id": "demo-01660f69cc",
+      "respuesta": "El responsable del incidente **INC-204** es el **Equipo de plataforma**.",
+      "eventos": [
+        {
+          "tipo": "usuario",
+          "texto": "¿Quién es el responsable de ese incidente? Indicá también su ID."
+        },
+        {
+          "tipo": "respuesta",
+          "texto": "El responsable del incidente **INC-204** es el **Equipo de plataforma**."
+        }
+      ],
+      "segundos": 1.86
+    },
+    {
+      "thread_id": "demo-01660f69cc",
+      "respuesta": "No hay un servicio **envíos** disponible en la base consultada. Solo puedo consultar **pagos** o **pedidos**. ¿Querés que busque el incidente de **pedidos**?",
+      "eventos": [
+        {
+          "tipo": "usuario",
+          "texto": "Consultá si hay un incidente en el servicio envíos."
+        },
+        {
+          "tipo": "accion",
+          "herramienta": "buscar_incidente",
+          "argumentos": {
+            "servicio": "envíos"
+          },
+          "id": "call_1Mfbzz02cVS7hlTEG5cztt0h"
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "buscar_incidente",
+          "id": "call_1Mfbzz02cVS7hlTEG5cztt0h",
+          "estado": "success",
+          "resultado": "{\"estado\": \"incompleto\", \"mensaje\": \"Pedí al usuario que indique uno de los servicios disponibles.\", \"servicios_disponibles\": [\"pagos\", \"pedidos\"]}"
+        },
+        {
+          "tipo": "respuesta",
+          "texto": "No hay un servicio **envíos** disponible en la base consultada. Solo puedo consultar **pagos** o **pedidos**. ¿Querés que busque el incidente de **pedidos**?"
+        }
+      ],
+      "segundos": 3.292
+    },
+    {
+      "thread_id": "demo-01660f69cc",
+      "respuesta": "El servicio **pedidos** tiene el incidente **INC-305**: **trabajos pendientes por un consumidor detenido**. El responsable es el **Equipo de operaciones**.\n\nProcedimiento **QUEUE-02**:\n\n1. Revisar el log del consumidor y corregir la causa de la detención.\n2. Reiniciar el consumidor siguiendo el procedimiento operativo.\n3. Verificar que cada trabajo confirme su finalización.\n\n**Verificación:** comprobar que disminuya la cantidad de trabajos pendientes.",
+      "eventos": [
+        {
+          "tipo": "usuario",
+          "texto": "Ahora consultá el incidente del servicio pedidos y los pasos de su procedimiento."
+        },
+        {
+          "tipo": "accion",
+          "herramienta": "buscar_incidente",
+          "argumentos": {
+            "servicio": "pedidos"
+          },
+          "id": "call_DMirnBwS9GMFuLERVk9srqfS"
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "buscar_incidente",
+          "id": "call_DMirnBwS9GMFuLERVk9srqfS",
+          "estado": "success",
+          "resultado": "{\"estado\": \"ok\", \"incidente_id\": \"INC-305\", \"servicio\": \"pedidos\", \"sintoma\": \"Trabajos pendientes por un consumidor detenido.\", \"procedimiento_id\": \"QUEUE-02\", \"responsable\": \"Equipo de operaciones\"}"
+        },
+        {
+          "tipo": "accion",
+          "herramienta": "consultar_procedimiento",
+          "argumentos": {
+            "procedimiento_id": "QUEUE-02"
+          },
+          "id": "call_H2LZ0r9r6UR4FkpsUJCcaWZu"
+        },
+        {
+          "tipo": "observacion",
+          "herramienta": "consultar_procedimiento",
+          "id": "call_H2LZ0r9r6UR4FkpsUJCcaWZu",
+          "estado": "success",
+          "resultado": "{\"estado\": \"ok\", \"procedimiento_id\": \"QUEUE-02\", \"pasos\": [\"Revisar el log del consumidor y corregir la causa de la detención.\", \"Reiniciar el consumidor siguiendo el procedimiento operativo.\", \"Verificar que cada trabajo confirma su finalización.\"], \"verificacion\": \"Comprobar que la cantidad de trabajos pendientes disminuye.\"}"
+        },
+        {
+          "tipo": "respuesta",
+          "texto": "El servicio **pedidos** tiene el incidente **INC-305**: **trabajos pendientes por un consumidor detenido**. El responsable es el **Equipo de operaciones**.\n\nProcedimiento **QUEUE-02**:\n\n1. Revisar el log del consumidor y corregir la causa de la detención.\n2. Reiniciar el consumidor siguiendo el procedimiento operativo.\n3. Verificar que cada trabajo confirme su finalización.\n\n**Verificación:** comprobar que disminuya la cantidad de trabajos pendientes."
+        }
+      ],
+      "segundos": 5.383
+    },
+    {
+      "thread_id": "demo-01660f69cc-nuevo",
+      "respuesta": "No tengo identificado el incidente al que te referís. ¿Podés indicar el nombre exacto del servicio o el ID del incidente?",
+      "eventos": [
+        {
+          "tipo": "usuario",
+          "texto": "¿Quién era el responsable del incidente que mencioné antes?"
+        },
+        {
+          "tipo": "respuesta",
+          "texto": "No tengo identificado el incidente al que te referís. ¿Podés indicar el nombre exacto del servicio o el ID del incidente?"
+        }
+      ],
+      "segundos": 2.051
+    }
+  ]
+}

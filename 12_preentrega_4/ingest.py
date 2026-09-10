@@ -5,13 +5,17 @@ from time import perf_counter
 
 from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
-from openai import APIConnectionError, APITimeoutError, InternalServerError, RateLimitError
-from pinecone.exceptions import PineconeApiException
+from openai import (
+    APIConnectionError,
+    APITimeoutError,
+    InternalServerError,
+    RateLimitError,
+)
 
 from config import BASE_DIR, Settings
 from documents import chunk_documents, load_documents
 from pinecone_setup import ensure_index
-from retry import run_with_retry
+from retry import PINECONE_RETRYABLE, run_with_retry
 
 logger = logging.getLogger(__name__)
 OPENAI_RETRYABLE = (
@@ -73,7 +77,11 @@ async def upsert_batches(
                 namespace=namespace,
             )
 
-        await run_with_retry(upsert, (PineconeApiException,))
+        response = await run_with_retry(upsert, PINECONE_RETRYABLE)
+        if response["upserted_count"] != len(batch):
+            raise RuntimeError(
+                "Pinecone no confirmó el lote completo; no se eliminarán vectores."
+            )
         inserted += len(batch)
     return inserted
 
@@ -83,12 +91,13 @@ async def ingest_documents(
     data_dir: Path = BASE_DIR / "data",
 ) -> int:
     started_at = perf_counter()
-    source_documents = load_documents(data_dir)
+    source_documents = load_documents(data_dir, strict=True)
     chunks = chunk_documents(source_documents)
     embedding_model = OpenAIEmbeddings(
         model=settings.embedding_model,
         dimensions=settings.embedding_dimension,
         api_key=settings.openai_api_key.get_secret_value(),
+        max_retries=0,
     )
 
     async def embed():
@@ -96,21 +105,51 @@ async def ingest_documents(
             [chunk.page_content for chunk in chunks]
         )
 
+    pinecone = await ensure_index(settings)
+    index = await asyncio.to_thread(pinecone.Index, settings.index_name)
+
+    async def list_ids():
+        return await asyncio.to_thread(
+            lambda: {
+                item
+                for page in index.list(namespace=settings.namespace)
+                for item in page
+            }
+        )
+
+    previous_ids = await run_with_retry(list_ids, PINECONE_RETRYABLE)
     embeddings = await run_with_retry(embed, OPENAI_RETRYABLE)
     records = build_vector_records(
         chunks,
         embeddings,
         settings.embedding_dimension,
     )
-    pinecone = await ensure_index(settings)
-    index = await asyncio.to_thread(pinecone.Index, settings.index_name)
     inserted = await upsert_batches(index, records, settings.namespace)
+    current_ids = {record["id"] for record in records}
+    removed = await delete_obsolete_vectors(
+        index, previous_ids - current_ids, settings.namespace
+    )
+    logger.info("Vectores obsoletos eliminados: %s", removed)
     logger.info(
         "Ingesta de %s vectores completada en %.3f segundos",
         inserted,
         perf_counter() - started_at,
     )
     return inserted
+
+
+async def delete_obsolete_vectors(index, obsolete_ids: set[str], namespace: str) -> int:
+    if not namespace.strip():
+        raise ValueError("La limpieza requiere un namespace explícito")
+    ids = sorted(obsolete_ids)
+    for start in range(0, len(ids), 100):
+        batch = ids[start : start + 100]
+
+        async def delete():
+            return await asyncio.to_thread(index.delete, ids=batch, namespace=namespace)
+
+        await run_with_retry(delete, PINECONE_RETRYABLE)
+    return len(ids)
 
 
 async def main() -> None:

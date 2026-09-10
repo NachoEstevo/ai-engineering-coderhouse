@@ -42,3 +42,14 @@ def test_evaluate_golden_set_returns_average_metrics():
 
     assert result["precision_at_5"] == 0.2
     assert result["recall_at_5"] == 1.0
+
+
+def test_metrics_ignore_duplicate_sources_and_reward_rank():
+    from evaluate import precision_at_k, recall_at_k, reciprocal_rank_at_k
+
+    sources = ["a.md", "a.md", "b.md", "c.md"]
+    relevant = {"b.md", "c.md"}
+    assert precision_at_k(sources, relevant, 3) == 2 / 3
+    assert recall_at_k(sources, relevant, 3) == 1.0
+    assert reciprocal_rank_at_k(sources, relevant, 3) == 0.5
+    assert reciprocal_rank_at_k(["b.md", "a.md"], relevant, 3) == 1.0

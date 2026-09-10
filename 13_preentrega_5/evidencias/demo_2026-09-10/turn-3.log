@@ -1,0 +1,8 @@
+INFO httpx2: HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+INFO agent: Llamada al modelo: 1.644s
+INFO tools: buscar_incidente: 0.000s
+INFO httpx2: HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+INFO agent: Llamada al modelo: 1.640s
+INFO __main__: Turno completado en 3.292s
+
+No hay un servicio **envíos** disponible en la base consultada. Solo puedo consultar **pagos** o **pedidos**. ¿Querés que busque el incidente de **pedidos**?

@@ -1,4 +1,5 @@
 import logging
+from collections import defaultdict
 from hashlib import sha256
 from pathlib import Path
 
@@ -9,13 +10,22 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 logger = logging.getLogger(__name__)
 
 
-def load_documents(data_dir: Path) -> list[Document]:
+def load_documents(data_dir: Path, strict: bool = False) -> list[Document]:
     documents = []
     for path in sorted(data_dir.glob("*.md")):
         try:
             content = path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError) as error:
             logger.error("No se pudo leer %s: %s", path.name, error)
+            if strict:
+                raise ValueError(
+                    f"Ingesta detenida: no se pudo leer {path.name}"
+                ) from error
+            continue
+
+        if not content.strip():
+            if strict:
+                raise ValueError(f"Ingesta detenida: {path.name} está vacío")
             continue
 
         category = path.stem.replace("_", "-")
@@ -67,7 +77,11 @@ def chunk_documents(
             if start + chunk_size >= len(tokens):
                 break
 
-    for position, chunk in enumerate(chunks):
-        identity = f"{chunk.metadata['source']}:{position}:{chunk.page_content}"
+    positions = defaultdict(int)
+    for chunk in chunks:
+        source = chunk.metadata["source"]
+        position = positions[source]
+        identity = f"{source}:{position}:{chunk.page_content}"
         chunk.metadata["chunk_id"] = sha256(identity.encode("utf-8")).hexdigest()
+        positions[source] += 1
     return chunks

@@ -3,8 +3,18 @@ import logging
 from collections.abc import Awaitable, Callable
 from typing import TypeVar
 
+from pinecone.exceptions import PineconeApiException
+from urllib3.exceptions import MaxRetryError, ProtocolError
+from urllib3.exceptions import TimeoutError as HTTPTimeoutError
+
 T = TypeVar("T")
 logger = logging.getLogger(__name__)
+PINECONE_RETRYABLE = (
+    PineconeApiException,
+    ProtocolError,
+    HTTPTimeoutError,
+    MaxRetryError,
+)
 
 
 async def run_with_retry(
@@ -20,6 +30,10 @@ async def run_with_retry(
         try:
             return await operation()
         except retryable_exceptions as error:
+            if isinstance(error, PineconeApiException):
+                status = error.status or 0
+                if status not in (408, 429) and not 500 <= status < 600:
+                    raise
             if attempt == attempts:
                 raise
             delay = base_delay * 2 ** (attempt - 1)

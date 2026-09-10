@@ -1,0 +1,15 @@
+{
+  "thread_id": "demo-01660f69cc",
+  "respuesta": "El responsable del incidente **INC-204** es el **Equipo de plataforma**.",
+  "eventos": [
+    {
+      "tipo": "usuario",
+      "texto": "¿Quién es el responsable de ese incidente? Indicá también su ID."
+    },
+    {
+      "tipo": "respuesta",
+      "texto": "El responsable del incidente **INC-204** es el **Equipo de plataforma**."
+    }
+  ],
+  "segundos": 1.86
+}

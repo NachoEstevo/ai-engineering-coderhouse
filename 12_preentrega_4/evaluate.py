@@ -17,9 +17,8 @@ def precision_at_k(
 ) -> float:
     if k < 1:
         raise ValueError("k debe ser mayor que cero")
-    relevant_count = sum(
-        source in relevant_sources for source in retrieved_sources[:k]
-    )
+    retrieved = list(dict.fromkeys(retrieved_sources))[:k]
+    relevant_count = len(set(retrieved) & relevant_sources)
     return relevant_count / k
 
 
@@ -28,10 +27,23 @@ def recall_at_k(
     relevant_sources: set[str],
     k: int,
 ) -> float:
+    if k < 1:
+        raise ValueError("k debe ser mayor que cero")
     if not relevant_sources:
         raise ValueError("Debe existir al menos una fuente relevante")
-    retrieved = set(retrieved_sources[:k])
+    retrieved = set(list(dict.fromkeys(retrieved_sources))[:k])
     return len(retrieved & relevant_sources) / len(relevant_sources)
+
+
+def reciprocal_rank_at_k(
+    retrieved_sources: list[str], relevant_sources: set[str], k: int
+) -> float:
+    if k < 1:
+        raise ValueError("k debe ser mayor que cero")
+    for rank, source in enumerate(list(dict.fromkeys(retrieved_sources))[:k], start=1):
+        if source in relevant_sources:
+            return 1 / rank
+    return 0.0
 
 
 def load_golden_set(path: Path) -> list[dict]:
@@ -44,26 +56,32 @@ async def evaluate_golden_set(
     k: int = 5,
 ) -> dict[str, float]:
     started_at = perf_counter()
+    if not cases:
+        raise ValueError("El Golden Set debe contener preguntas")
     precisions = []
     recalls = []
+    reciprocal_ranks = []
 
     for case in cases:
         documents = await system.retrieve(case["question"])
-        retrieved_sources = [
-            document.metadata["source"] for document in documents
-        ]
+        retrieved_sources = [document.metadata["source"] for document in documents]
         relevant_sources = set(case["relevant_sources"])
         precision = precision_at_k(retrieved_sources, relevant_sources, k)
         recall = recall_at_k(retrieved_sources, relevant_sources, k)
+        rank = reciprocal_rank_at_k(retrieved_sources, relevant_sources, k)
         precisions.append(precision)
         recalls.append(recall)
+        reciprocal_ranks.append(rank)
         print(f"Pregunta: {case['question']}")
         print(f"Fuentes recuperadas: {retrieved_sources}")
-        print(f"Precision@{k}: {precision:.2f} | Recall@{k}: {recall:.2f}\n")
+        print(
+            f"Precision@{k}: {precision:.2f} | Recall@{k}: {recall:.2f} | RR@{k}: {rank:.2f}\n"
+        )
 
     result = {
         f"precision_at_{k}": sum(precisions) / len(precisions),
         f"recall_at_{k}": sum(recalls) / len(recalls),
+        f"mrr_at_{k}": sum(reciprocal_ranks) / len(reciprocal_ranks),
     }
     logger.info(
         "Evaluación completada en %.3f segundos",
@@ -79,8 +97,8 @@ async def main() -> None:
     cases = load_golden_set(BASE_DIR / "golden_set.json")
     metrics = await evaluate_golden_set(system, cases, settings.top_k)
     print("Resumen")
-    print(f"Precision@5 promedio: {metrics['precision_at_5']:.2f}")
-    print(f"Recall@5 promedio: {metrics['recall_at_5']:.2f}")
+    for name, value in metrics.items():
+        print(f"{name}: {value:.2f}")
 
 
 if __name__ == "__main__":

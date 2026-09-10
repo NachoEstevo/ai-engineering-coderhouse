@@ -1,0 +1,30 @@
+{
+  "thread_id": "demo-01660f69cc",
+  "respuesta": "No hay un servicio **envíos** disponible en la base consultada. Solo puedo consultar **pagos** o **pedidos**. ¿Querés que busque el incidente de **pedidos**?",
+  "eventos": [
+    {
+      "tipo": "usuario",
+      "texto": "Consultá si hay un incidente en el servicio envíos."
+    },
+    {
+      "tipo": "accion",
+      "herramienta": "buscar_incidente",
+      "argumentos": {
+        "servicio": "envíos"
+      },
+      "id": "call_1Mfbzz02cVS7hlTEG5cztt0h"
+    },
+    {
+      "tipo": "observacion",
+      "herramienta": "buscar_incidente",
+      "id": "call_1Mfbzz02cVS7hlTEG5cztt0h",
+      "estado": "success",
+      "resultado": "{\"estado\": \"incompleto\", \"mensaje\": \"Pedí al usuario que indique uno de los servicios disponibles.\", \"servicios_disponibles\": [\"pagos\", \"pedidos\"]}"
+    },
+    {
+      "tipo": "respuesta",
+      "texto": "No hay un servicio **envíos** disponible en la base consultada. Solo puedo consultar **pagos** o **pedidos**. ¿Querés que busque el incidente de **pedidos**?"
+    }
+  ],
+  "segundos": 3.292
+}

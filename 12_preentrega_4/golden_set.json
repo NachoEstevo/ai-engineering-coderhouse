@@ -1,22 +1,27 @@
 [
   {
-    "question": "¿Qué garantía ofrece TaskGroup cuando una de sus tareas falla?",
-    "relevant_sources": ["tasks.md"]
+    "question": "¿Cómo espera TaskGroup a sus tareas y cómo funciona la cancelación si una falla?",
+    "relevant_sources": ["tasks.md", "timeouts.md"],
+    "justification": "tasks describe TaskGroup; timeouts explica la propagación de CancelledError y la limpieza."
   },
   {
-    "question": "¿Cómo puedo limitar a diez la cantidad de coroutines que acceden a una API?",
-    "relevant_sources": ["synchronization.md"]
+    "question": "¿Cómo limito a diez las coroutines que acceden a una API y pongo un plazo máximo a la espera?",
+    "relevant_sources": ["synchronization.md", "timeouts.md"],
+    "justification": "synchronization explica Semaphore(10); timeouts desarrolla los límites temporales."
   },
   {
-    "question": "¿Cómo distribuyo trabajos FIFO y espero hasta que todos estén procesados?",
-    "relevant_sources": ["queues.md"]
+    "question": "¿Cómo distribuyo trabajos FIFO, espero su procesamiento y limito el tiempo de espera de get?",
+    "relevant_sources": ["queues.md", "timeouts.md"],
+    "justification": "queues cubre FIFO, task_done y join; timeouts explica wait_for y su cancelación."
   },
   {
-    "question": "¿Qué ocurre cuando vence asyncio.timeout y dónde se captura el error?",
-    "relevant_sources": ["timeouts.md"]
+    "question": "¿Cómo inicio un programa asíncrono y agrupo subtareas concurrentes para esperar su finalización?",
+    "relevant_sources": ["runners.md", "tasks.md"],
+    "justification": "runners cubre asyncio.run; tasks explica create_task, gather y TaskGroup."
   },
   {
-    "question": "¿Cómo leo stdout y stderr de un subproceso sin provocar un deadlock?",
-    "relevant_sources": ["subprocesses.md"]
+    "question": "¿Cómo leo stdout y stderr de un subproceso sin deadlock, aplicando un timeout?",
+    "relevant_sources": ["subprocesses.md", "timeouts.md"],
+    "justification": "subprocesses cubre communicate y PIPE; timeouts explica cómo limitar esa espera."
   }
 ]

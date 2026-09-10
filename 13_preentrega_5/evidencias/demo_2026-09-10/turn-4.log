@@ -1,0 +1,19 @@
+INFO httpx2: HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+INFO agent: Llamada al modelo: 1.587s
+INFO tools: buscar_incidente: 0.000s
+INFO httpx2: HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+INFO agent: Llamada al modelo: 1.968s
+INFO tools: consultar_procedimiento: 0.000s
+INFO httpx2: HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+INFO agent: Llamada al modelo: 1.814s
+INFO __main__: Turno completado en 5.383s
+
+El servicio **pedidos** tiene el incidente **INC-305**: **trabajos pendientes por un consumidor detenido**. El responsable es el **Equipo de operaciones**.
+
+Procedimiento **QUEUE-02**:
+
+1. Revisar el log del consumidor y corregir la causa de la detención.
+2. Reiniciar el consumidor siguiendo el procedimiento operativo.
+3. Verificar que cada trabajo confirme su finalización.
+
+**Verificación:** comprobar que disminuya la cantidad de trabajos pendientes.
