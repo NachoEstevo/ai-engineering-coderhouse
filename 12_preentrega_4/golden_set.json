@@ -1,0 +1,22 @@
+[
+  {
+    "question": "¿Qué garantía ofrece TaskGroup cuando una de sus tareas falla?",
+    "relevant_sources": ["tasks.md"]
+  },
+  {
+    "question": "¿Cómo puedo limitar a diez la cantidad de coroutines que acceden a una API?",
+    "relevant_sources": ["synchronization.md"]
+  },
+  {
+    "question": "¿Cómo distribuyo trabajos FIFO y espero hasta que todos estén procesados?",
+    "relevant_sources": ["queues.md"]
+  },
+  {
+    "question": "¿Qué ocurre cuando vence asyncio.timeout y dónde se captura el error?",
+    "relevant_sources": ["timeouts.md"]
+  },
+  {
+    "question": "¿Cómo leo stdout y stderr de un subproceso sin provocar un deadlock?",
+    "relevant_sources": ["subprocesses.md"]
+  }
+]
