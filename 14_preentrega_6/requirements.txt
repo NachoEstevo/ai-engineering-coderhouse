@@ -1,0 +1,5 @@
+langgraph==1.2.11
+langchain-openai==1.6.2
+pydantic-settings==2.15.0
+pytest==9.1.1
+pytest-asyncio==1.4.0

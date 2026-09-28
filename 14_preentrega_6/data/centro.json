@@ -1,0 +1,6 @@
+{
+  "id": "centro",
+  "title": "Promedio y mediana: medidas de centro",
+  "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda351.htm",
+  "text": "Apunte propio basado en NIST. La media aritmética o promedio suma los valores y divide por la cantidad de observaciones. La mediana ordena los valores y toma el central, o el promedio de los dos centrales cuando la cantidad es par. La media puede desplazarse por valores extremos; la mediana es menos sensible a esos extremos. Para comparar dos grupos conviene informar ambas medidas de centro. Dos grupos con el mismo promedio no necesariamente tienen la misma variabilidad ni la misma distribución."
+}

@@ -1,0 +1,7 @@
+[lint]
+extend-select = ["I", "UP", "B", "BLE", "TRY004", "ISC", "C4"]
+
+[lint.per-file-ignores]
+"graph.py" = ["BLE001"]
+"main.py" = ["BLE001"]
+"state.py" = ["TRY004"]

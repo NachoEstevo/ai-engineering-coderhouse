@@ -1,0 +1,6 @@
+{
+  "id": "comparacion",
+  "title": "Comparación descriptiva y límites de la inferencia",
+  "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm",
+  "text": "Apunte propio para la demo, con referencia al contraste de medias de NIST. Comparar los promedios de dos muestras es distinto de contrastar si sus medias poblacionales son diferentes. Una prueba t requiere plantear hipótesis y considerar el diseño de las muestras, su dependencia y los supuestos aplicables. Este prototipo solo calcula estadísticas descriptivas: no ejecuta una prueba t, no produce p-valores y no demuestra significancia, causalidad ni superioridad futura. Si faltan datos o unidades comparables, corresponde pedir aclaración."
+}

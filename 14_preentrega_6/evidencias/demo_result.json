@@ -1,0 +1,183 @@
+{
+  "completed": true,
+  "response": "Descriptivamente, ambos grupos tienen el mismo promedio y la misma mediana, por lo que ninguno presenta un promedio menor. La mediana representa el valor central de los datos ordenados y es menos sensible a valores extremos que la media. La dispersión indica cuánto varían las observaciones; la desviación estándar muestral la expresa en las mismas unidades que los tiempos. A tiene menor desviación estándar que B, por lo que es el grupo más consistente según este criterio. Esta comparación no evalúa significancia estadística, causalidad ni desempeño futuro. Fuentes: “Promedio y mediana: medidas de centro” (NIST: https://www.itl.nist.gov/div898/handbook/eda/section3/eda351.htm), “Dispersión, desviación estándar y consistencia” (NIST: https://www.itl.nist.gov/div898/handbook/eda/section3/eda356.htm) y “Comparación descriptiva y límites de la inferencia” (NIST: https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm).\n\n| Grupo | Unidad | n | Promedio | Mediana | Desviación muestral |\n| --- | --- | ---: | ---: | ---: | ---: |\n| A | ms | 5 | 100 | 100 | 7.07107 |\n| B | ms | 5 | 100 | 100 | 15.8114 |\n\nMenor promedio: empate. Menor dispersión: A.\nComparación descriptiva; no demuestra significancia estadística ni causalidad.\n\nFuentes:\n- [Dispersión, desviación estándar y consistencia](https://www.itl.nist.gov/div898/handbook/eda/section3/eda356.htm) (dispersion)\n- [Promedio y mediana: medidas de centro](https://www.itl.nist.gov/div898/handbook/eda/section3/eda351.htm) (centro)\n- [Comparación descriptiva y límites de la inferencia](https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm) (comparacion)",
+  "contributions": [
+    {
+      "agent": "research",
+      "status": "complete",
+      "narrative": "- **Título:** *Dispersión, desviación estándar y consistencia*  \n  **Referencia:** NIST/ITL, *Engineering Statistics Handbook*, sección EDA sobre dispersión. Fuente local: https://www.itl.nist.gov/div898/handbook/eda/section3/eda356.htm  \n  **Puntos respaldados:**\n  - La dispersión describe cuánto varían las observaciones.\n  - La desviación estándar muestral se obtiene como la raíz cuadrada de la varianza muestral; conserva las unidades originales y requiere al menos dos observaciones.\n  - Para comparar la consistencia de los grupos A y B, con la misma variable y unidad, una menor desviación estándar descriptivamente indica menor dispersión.\n  - Una menor dispersión no implica un menor promedio.\n  - Los valores extremos pueden influir considerablemente en la desviación estándar.\n\n- **Título:** *Promedio y mediana: medidas de centro*  \n  **Referencia:** NIST/ITL, *Engineering Statistics Handbook*, sección EDA sobre medidas de centro. Fuente local: https://www.itl.nist.gov/div898/handbook/eda/section3/eda351.htm  \n  **Puntos respaldados:**\n  - La media aritmética o promedio resume los valores mediante su suma dividida por la cantidad de observaciones.\n  - La mediana se obtiene ordenando las observaciones y seleccionando el valor central.\n  - La media puede verse desplazada por valores extremos; la mediana es menos sensible a ellos.\n  - Para comparar descriptivamente dos grupos conviene informar ambas medidas de centro.\n  - Grupos con el mismo promedio pueden presentar distinta variabilidad o distribución.\n\n- **Título:** *Comparación descriptiva y límites de la inferencia*  \n  **Referencia:** NIST/ITL, *Engineering Statistics Handbook*, sección EDA sobre comparación de grupos. Fuente local: https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm  \n  **Puntos respaldados:**\n  - Comparar los promedios de dos muestras es distinto de contrastar si sus medias poblacionales difieren.\n  - Una prueba t requiere hipótesis, considerar la dependencia o independencia del diseño muestral y evaluar los supuestos aplicables.\n  - Las estadísticas descriptivas no producen por sí mismas valores *p* ni demuestran significancia estadística, causalidad o superioridad futura.\n  - Las comparaciones requieren unidades y variables comparables.",
+      "sources": [
+        {
+          "id": "dispersion",
+          "title": "Dispersión, desviación estándar y consistencia",
+          "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda356.htm",
+          "text": "Apunte propio basado en NIST. La dispersión describe cuánto varían las observaciones. La varianza muestral suma las diferencias al cuadrado respecto de la media y divide por n menos uno. La desviación estándar muestral es la raíz cuadrada de esa varianza y conserva las unidades originales. Requiere al menos dos observaciones. En este ejercicio, mayor consistencia significa menor desviación estándar, al comparar la misma variable en la misma unidad. Una menor dispersión no implica un menor promedio. Los valores extremos pueden influir mucho en esta medida."
+        },
+        {
+          "id": "centro",
+          "title": "Promedio y mediana: medidas de centro",
+          "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda351.htm",
+          "text": "Apunte propio basado en NIST. La media aritmética o promedio suma los valores y divide por la cantidad de observaciones. La mediana ordena los valores y toma el central, o el promedio de los dos centrales cuando la cantidad es par. La media puede desplazarse por valores extremos; la mediana es menos sensible a esos extremos. Para comparar dos grupos conviene informar ambas medidas de centro. Dos grupos con el mismo promedio no necesariamente tienen la misma variabilidad ni la misma distribución."
+        },
+        {
+          "id": "comparacion",
+          "title": "Comparación descriptiva y límites de la inferencia",
+          "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm",
+          "text": "Apunte propio para la demo, con referencia al contraste de medias de NIST. Comparar los promedios de dos muestras es distinto de contrastar si sus medias poblacionales son diferentes. Una prueba t requiere plantear hipótesis y considerar el diseño de las muestras, su dependencia y los supuestos aplicables. Este prototipo solo calcula estadísticas descriptivas: no ejecuta una prueba t, no produce p-valores y no demuestra significancia, causalidad ni superioridad futura. Si faltan datos o unidades comparables, corresponde pedir aclaración."
+        }
+      ],
+      "stats": []
+    },
+    {
+      "agent": "analysis",
+      "status": "complete",
+      "narrative": "### Grupo A (ms)\n- **n:** 5\n- **Promedio:** 100,00 ms\n- **Mediana:** 100,00 ms\n- **Desviación estándar muestral:** 7,07 ms\n\n### Grupo B (ms)\n- **n:** 5\n- **Promedio:** 100,00 ms\n- **Mediana:** 100,00 ms\n- **Desviación estándar muestral:** 15,81 ms\n\n### Comparación descriptiva\n- **Menor promedio:** empate entre A y B, ambos con 100,00 ms.\n- **Menor desviación estándar:** grupo A, con 7,07 ms frente a 15,81 ms en B. Descriptivamente, A presenta menor dispersión.",
+      "sources": [],
+      "stats": [
+        {
+          "name": "A",
+          "unit": "ms",
+          "n": 5,
+          "mean": 100.0,
+          "median": 100.0,
+          "stdev": 7.0710678118654755
+        },
+        {
+          "name": "B",
+          "unit": "ms",
+          "n": 5,
+          "mean": 100.0,
+          "median": 100.0,
+          "stdev": 15.811388300841896
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "agent": "supervisor",
+      "action": "decision",
+      "next_agent": "research",
+      "instruction": "Buscá en el corpus local fuentes pertinentes y vigentes sobre cómo comparar dos grupos mediante media, mediana y desviación estándar muestral, y sobre la interpretación descriptiva de dispersión. Devolvé únicamente las fuentes verificadas con sus títulos, referencias y los puntos que respaldan; no calcules métricas ni infieras significancia estadística.",
+      "rubric": "La respuesta debe aportar fuentes locales pertinentes y vigentes, verificadas, que permitan explicar media, mediana y dispersión sin afirmar pruebas de significancia.",
+      "seconds": 2.7719997000003787
+    },
+    {
+      "agent": "research",
+      "action": "model",
+      "seconds": 1.6646809000003486
+    },
+    {
+      "agent": "research",
+      "action": "tool",
+      "tool": "buscar_fuentes",
+      "arguments": {
+        "query": "comparar dos grupos media mediana desviación estándar muestral interpretación descriptiva dispersión"
+      },
+      "result": {
+        "sources": [
+          {
+            "id": "dispersion",
+            "title": "Dispersión, desviación estándar y consistencia",
+            "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda356.htm",
+            "text": "Apunte propio basado en NIST. La dispersión describe cuánto varían las observaciones. La varianza muestral suma las diferencias al cuadrado respecto de la media y divide por n menos uno. La desviación estándar muestral es la raíz cuadrada de esa varianza y conserva las unidades originales. Requiere al menos dos observaciones. En este ejercicio, mayor consistencia significa menor desviación estándar, al comparar la misma variable en la misma unidad. Una menor dispersión no implica un menor promedio. Los valores extremos pueden influir mucho en esta medida."
+          },
+          {
+            "id": "centro",
+            "title": "Promedio y mediana: medidas de centro",
+            "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda351.htm",
+            "text": "Apunte propio basado en NIST. La media aritmética o promedio suma los valores y divide por la cantidad de observaciones. La mediana ordena los valores y toma el central, o el promedio de los dos centrales cuando la cantidad es par. La media puede desplazarse por valores extremos; la mediana es menos sensible a esos extremos. Para comparar dos grupos conviene informar ambas medidas de centro. Dos grupos con el mismo promedio no necesariamente tienen la misma variabilidad ni la misma distribución."
+          },
+          {
+            "id": "comparacion",
+            "title": "Comparación descriptiva y límites de la inferencia",
+            "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm",
+            "text": "Apunte propio para la demo, con referencia al contraste de medias de NIST. Comparar los promedios de dos muestras es distinto de contrastar si sus medias poblacionales son diferentes. Una prueba t requiere plantear hipótesis y considerar el diseño de las muestras, su dependencia y los supuestos aplicables. Este prototipo solo calcula estadísticas descriptivas: no ejecuta una prueba t, no produce p-valores y no demuestra significancia, causalidad ni superioridad futura. Si faltan datos o unidades comparables, corresponde pedir aclaración."
+          }
+        ],
+        "errors": []
+      },
+      "seconds": 0.0017053999999916414
+    },
+    {
+      "agent": "research",
+      "action": "model",
+      "seconds": 6.024849899999936
+    },
+    {
+      "agent": "supervisor",
+      "action": "decision",
+      "next_agent": "analysis",
+      "instruction": "Calculá para los grupos A y B, en ms, n, promedio, mediana y desviación estándar muestral (divisor n−1). Devolvé los resultados separados por grupo y una comparación descriptiva de cuál tiene menor promedio y cuál menor desviación estándar. No calcules ni infieras otras métricas.",
+      "rubric": "La síntesis requiere ambos grupos calculados, unidades coherentes (ms) y sin inferencia de significancia estadística.",
+      "seconds": 9.741936399999759
+    },
+    {
+      "agent": "analysis",
+      "action": "model",
+      "seconds": 1.0658991999998761
+    },
+    {
+      "agent": "analysis",
+      "action": "tool",
+      "tool": "calcular_estadisticas",
+      "arguments": {},
+      "result": {
+        "stats": [
+          {
+            "name": "A",
+            "unit": "ms",
+            "n": 5,
+            "mean": 100.0,
+            "median": 100.0,
+            "stdev": 7.0710678118654755
+          },
+          {
+            "name": "B",
+            "unit": "ms",
+            "n": 5,
+            "mean": 100.0,
+            "median": 100.0,
+            "stdev": 15.811388300841896
+          }
+        ]
+      },
+      "seconds": 0.000904600000467326
+    },
+    {
+      "agent": "analysis",
+      "action": "model",
+      "seconds": 2.136996899999758
+    },
+    {
+      "agent": "supervisor",
+      "action": "decision",
+      "next_agent": "synthesis",
+      "instruction": "Redactá la respuesta final en español. Compará A y B usando únicamente n, promedio, mediana y desviación estándar muestral calculados. Indicá que el promedio menor es un empate (100 ms cada uno) y que A es más consistente descriptivamente (7,07 ms frente a 15,81 ms). Explicá brevemente media, mediana y dispersión, manteniendo la unidad ms. Citá las tres fuentes locales de NIST provistas y aclarà que es una comparación descriptiva, sin significancia estadística ni p-valores.",
+      "rubric": "Debe incluir fuentes locales pertinentes y verificadas; reportar ambos grupos con unidades coherentes; usar solo n, promedio, mediana y desviación estándar muestral; no inventar métricas ni inferir significancia estadística; resolver explícitamente menor promedio y mayor consistencia; no dejar contradicciones pendientes.",
+      "seconds": 4.654956800000036
+    },
+    {
+      "agent": "synthesis",
+      "action": "model",
+      "seconds": 3.6594531999999163
+    },
+    {
+      "agent": "synthesis",
+      "action": "validated"
+    }
+  ],
+  "seconds": 31.868681199999628,
+  "run_metadata": {
+    "utc": "2026-09-28T16:13:11.855589+00:00",
+    "model": "gpt-5.6-luna",
+    "python": "3.12.13",
+    "packages": {
+      "langgraph": "1.2.11",
+      "langchain-openai": "1.6.2",
+      "openai": "3.19.2",
+      "pydantic": "2.13.5"
+    },
+    "synthetic_data": true
+  }
+}

@@ -1,0 +1,26 @@
+name: preentrega7
+services:
+  redis:
+    image: redis:8.2.1
+    ports:
+      - "127.0.0.1:16379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - pre7-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+  api:
+    build: .
+    env_file: .env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "127.0.0.1:18070:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+volumes:
+  pre7-redis:

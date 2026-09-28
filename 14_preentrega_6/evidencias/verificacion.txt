@@ -1,0 +1,20 @@
+Verificación local — 2026-09-28
+Directorio: 14_preentrega_6
+Python: 3.12.13
+
+Comando: .\.venv\Scripts\python.exe -m pytest -q
+Resultado: 38 passed in 1.24s
+
+Comando: uvx ruff check .
+Resultado: All checks passed!
+
+Comando: uvx ruff format --check .
+Resultado: 18 files already formatted
+
+Notebook: demo.ipynb ejecutado con nbclient y validado con nbformat.
+Proveedor real: gpt-5.6-luna.
+Resultado: completed=true, Investigación -> Análisis -> Síntesis.
+Duración registrada: 31.868681199999628 segundos.
+Herramientas ejecutadas: buscar_fuentes y calcular_estadisticas.
+Datos sintéticos; búsqueda local y cálculo reales.
+No se midió una tasa de éxito general ni carga concurrente.

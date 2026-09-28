@@ -1,0 +1,84 @@
+{
+  "batch_id": "pre7-load-20260928-final",
+  "source": "LangSmith API: actual run costs and aggregate statistics",
+  "runs": [
+    {
+      "job_id": "a8ffdbba-9104-425f-9312-90e1d5da0db3",
+      "trace_id": "54e8902b-8a04-4859-b430-78215ba07583",
+      "url": "https://smith.langchain.com/o/e65c3e6a-eb24-461f-84d5-8a4a8e2d7e58/projects/p/db4b5b9e-2232-4d2e-a2e6-21b017f95282/trace/54e8902b-8a04-4859-b430-78215ba07583/run/54e8902b-8a04-4859-b430-78215ba07583",
+      "status": "success",
+      "seconds": 44.605833,
+      "input_tokens": 13022,
+      "output_tokens": 2295,
+      "total_cost_usd": "0.002511265"
+    },
+    {
+      "job_id": "6858a824-bcb4-4f7c-b1c4-74abdceec1d3",
+      "trace_id": "16fce9e8-a7ee-447c-8a97-718ae5356a0b",
+      "url": "https://smith.langchain.com/o/e65c3e6a-eb24-461f-84d5-8a4a8e2d7e58/projects/p/db4b5b9e-2232-4d2e-a2e6-21b017f95282/trace/16fce9e8-a7ee-447c-8a97-718ae5356a0b/run/16fce9e8-a7ee-447c-8a97-718ae5356a0b",
+      "status": "success",
+      "seconds": 25.392744,
+      "input_tokens": 7449,
+      "output_tokens": 1322,
+      "total_cost_usd": "0.001400235"
+    },
+    {
+      "job_id": "d8421010-4377-4873-8547-dc0eeaa22469",
+      "trace_id": "8fd9c086-5b53-42cd-8e04-8e36e8f12150",
+      "url": "https://smith.langchain.com/o/e65c3e6a-eb24-461f-84d5-8a4a8e2d7e58/projects/p/db4b5b9e-2232-4d2e-a2e6-21b017f95282/trace/8fd9c086-5b53-42cd-8e04-8e36e8f12150/run/8fd9c086-5b53-42cd-8e04-8e36e8f12150",
+      "status": "success",
+      "seconds": 23.248394,
+      "input_tokens": 6631,
+      "output_tokens": 1148,
+      "total_cost_usd": "0.001232925"
+    },
+    {
+      "job_id": "c31487aa-23a9-4284-ad4a-0cd5953b36b8",
+      "trace_id": "b18db467-f80f-4e35-a6cb-486f0fcce26b",
+      "url": "https://smith.langchain.com/o/e65c3e6a-eb24-461f-84d5-8a4a8e2d7e58/projects/p/db4b5b9e-2232-4d2e-a2e6-21b017f95282/trace/b18db467-f80f-4e35-a6cb-486f0fcce26b/run/b18db467-f80f-4e35-a6cb-486f0fcce26b",
+      "status": "success",
+      "seconds": 34.275159,
+      "input_tokens": 6607,
+      "output_tokens": 1181,
+      "total_cost_usd": "0.00133835"
+    },
+    {
+      "job_id": "e65e97cf-db6e-4a75-8a10-3cc6c3029616",
+      "trace_id": "8e66d26a-17a9-4a36-8f0b-7c0c242ba02f",
+      "url": "https://smith.langchain.com/o/e65c3e6a-eb24-461f-84d5-8a4a8e2d7e58/projects/p/db4b5b9e-2232-4d2e-a2e6-21b017f95282/trace/8e66d26a-17a9-4a36-8f0b-7c0c242ba02f/run/8e66d26a-17a9-4a36-8f0b-7c0c242ba02f",
+      "status": "success",
+      "seconds": 23.845949,
+      "input_tokens": 7521,
+      "output_tokens": 1092,
+      "total_cost_usd": "0.001291535"
+    }
+  ],
+  "platform_stats": {
+    "run_count": 5,
+    "latency_p50": 25.281114906669416,
+    "latency_p99": 34.126276903648446,
+    "error_rate": 0.0
+  },
+  "llm_by_node": {
+    "synthesis": {
+      "llm_calls": 5,
+      "tokens": 4550,
+      "seconds": 23.358356
+    },
+    "supervisor": {
+      "llm_calls": 17,
+      "tokens": 20328,
+      "seconds": 67.33898099999999
+    },
+    "research": {
+      "llm_calls": 14,
+      "tokens": 11115,
+      "seconds": 43.382494
+    },
+    "analysis": {
+      "llm_calls": 10,
+      "tokens": 12275,
+      "seconds": 16.10958
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "query": "Buscá cómo comparar dos grupos y analizá estos tiempos de respuesta. ¿Cuál tiene menor promedio y cuál es más consistente? Explicá media, mediana y dispersión con fuentes, sin inferir significancia estadística.",
+  "groups": [
+    {"name": "A", "unit": "ms", "values": [100, 110, 90, 100, 100]},
+    {"name": "B", "unit": "ms", "values": [80, 120, 100, 90, 110]}
+  ]
+}

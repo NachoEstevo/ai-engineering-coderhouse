@@ -1,0 +1,6 @@
+{
+  "id": "dispersion",
+  "title": "Dispersión, desviación estándar y consistencia",
+  "source_url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda356.htm",
+  "text": "Apunte propio basado en NIST. La dispersión describe cuánto varían las observaciones. La varianza muestral suma las diferencias al cuadrado respecto de la media y divide por n menos uno. La desviación estándar muestral es la raíz cuadrada de esa varianza y conserva las unidades originales. Requiere al menos dos observaciones. En este ejercicio, mayor consistencia significa menor desviación estándar, al comparar la misma variable en la misma unidad. Una menor dispersión no implica un menor promedio. Los valores extremos pueden influir mucho en esta medida."
+}

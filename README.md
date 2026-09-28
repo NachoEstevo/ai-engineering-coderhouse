@@ -11,5 +11,7 @@ Repositorio de ejercicios y pre-entregas del curso, organizado por unidad.
 | `05_opcional_lcel_async` | Ejercicio opcional: refactorización a LCEL asíncrono |
 | `12_preentrega_4` | Pre-entrega 4: recuperación híbrida con Pinecone y evaluación |
 | `13_preentrega_5` | Pre-entrega 5: agente cíclico con herramientas y memoria SQLite |
+| `14_preentrega_6` | Pre-entrega 6: Supervisor multi-agente de investigación y análisis estadístico |
+| [`15_preentrega_7`](15_preentrega_7/) | Pre-entrega 7: API FastAPI, Redis, aprobación humana y monitoreo con LangSmith |
 
 Cada módulo mantiene sus propios archivos de ejecución, configuración y documentación cuando lo requiere.

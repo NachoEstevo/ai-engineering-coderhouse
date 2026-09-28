@@ -1,0 +1,9 @@
+{
+  "query": "Compará promedio y dispersión de ambos grupos usando fuentes. No infieras causalidad.",
+  "groups": [
+    {"name": "A", "unit": "ms", "values": [100, 110, 90, 100, 100]},
+    {"name": "B", "unit": "ms", "values": [80, 120, 100, 90, 110]}
+  ],
+  "save_result": true,
+  "batch_id": "demo-hitl"
+}
